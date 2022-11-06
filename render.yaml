@@ -1,0 +1,22 @@
+databases:
+  - name: snake_game
+    databaseName: snake_game
+    user: snake_game
+    plan: free
+
+services:
+  - type: web
+    name: snake_game
+    env: ruby
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      # AUTOMATICALLY ADDED (OR FIND IT ON RENDER WEBSITE)
+      - key: DATABASE_URL
+        fromDatabase:
+          name: snake_game
+          property: connectionString
+      # YOU FIND THIS IN ./config/master.key
+      - key: RAILS_MASTER_KEY
+        sync: false
