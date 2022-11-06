@@ -343,6 +343,7 @@ export default function SnakeGame() {
           <div
             className={`popUpScreen startScreen ${startScreenClass.current}`}
           >
+            {/* <h1>hi</h1> */}
             <p className="words">Press Anything To Start!</p>
           </div>
 
