@@ -18,6 +18,8 @@ import SaveIcon from "./images/save.svg";
 // TAIL === Snake Tail
 // 15x15 grid always (idk why but thats what i chose)
 
+//when game ends show screen if they want to save score
+
 export default function SnakeGame(highscores) {
   let [snake, setSnake] = useState([
     [12, 12],
@@ -36,10 +38,10 @@ export default function SnakeGame(highscores) {
   const [countDownClass, setCountDownClass] = useState("");
   const [timer, setTimer] = useState(3);
   const [endScreenClass, setEndScreen] = useState("");
-  const [leaderboardClass, setLeaderboardClass] = useState("showLeaderboard");
+  const [leaderboardClass, setLeaderboardClass] = useState("");
   const [saveScoreClass, setSaveScoreClass] = useState("");
 
-  console.log("ALL PLAYERS SCORE MODEL", highscores.highscores);
+  // console.log("ALL PLAYERS SCORE MODEL", highscores.highscores);
 
   function clearAllScreens() {
     setEndScreen("");
@@ -54,11 +56,17 @@ export default function SnakeGame(highscores) {
       [12, 12],
       [12, 13],
     ]);
+
     foodCoords.current = randomFoodCoords(snake);
+
     snakeDirection.current = "left";
+
     gameStart.current = false;
+
     setFirstStart(true);
+
     setTimer(3);
+
     clearAllScreens();
   }
 
@@ -83,6 +91,36 @@ export default function SnakeGame(highscores) {
     }, 1000);
   }
 
+  function endGame() {
+    let scoreIsHigher = false;
+    let leaderboard = highscores.highscores;
+
+    // SHOW THE NICE-JOB SCREEN
+
+    for (let i = 0; i < leaderboard.length; i++) {
+      if (snake.length - 2 >= leaderboard[i].score) {
+        scoreIsHigher = true;
+      }
+    }
+
+    if (scoreIsHigher) {
+      setEndScreen("");
+      setSaveScoreClass("showSave");
+    } else {
+      //wait 5 sec then show leadboards
+      setEndScreen("showEnd");
+      setTimeout(() => {
+        setEndScreen("");
+        setLeaderboardClass("showLeaderboard");
+      }, 5000);
+    }
+
+    console.log("score is higher?", scoreIsHigher);
+
+    // (basically a return)
+    gameStart.current = false;
+  }
+
   function restartGameAfterEnd() {
     setEndScreen("");
     setTimer(3);
@@ -90,6 +128,8 @@ export default function SnakeGame(highscores) {
       [12, 12],
       [12, 13],
     ]);
+    setLeaderboardClass("");
+    setSaveScoreClass("");
     foodCoords.current = randomFoodCoords(snake);
     snakeDirection.current = "left";
     gameStart.current = false;
@@ -126,7 +166,7 @@ export default function SnakeGame(highscores) {
     // console.timeEnd("foodToHeadCollision");
   }
 
-  function snakeToWallCollision(snake, gridSize, gameStart, setEndScreen) {
+  function snakeToWallCollision(snake, gridSize, endGame) {
     let size = gridSize - 1;
     let headRow = snake[0][0];
     let headColumn = snake[0][1];
@@ -137,8 +177,7 @@ export default function SnakeGame(highscores) {
       setTimeout(() => {
         if (snakeDirection.current === "left") {
           // alert("you stink loser");
-          setEndScreen("showEnd");
-          gameStart.current = false;
+          endGame();
         }
       }, snakeUpdateTime - 50);
     }
@@ -148,8 +187,7 @@ export default function SnakeGame(highscores) {
       setTimeout(() => {
         if (snakeDirection.current === "right") {
           // alert("you stink loser");
-          setEndScreen("showEnd");
-          gameStart.current = false;
+          endGame();
         }
       }, snakeUpdateTime - 50);
     }
@@ -159,9 +197,7 @@ export default function SnakeGame(highscores) {
       setTimeout(() => {
         if (snakeDirection.current === "up") {
           // alert("you stink loser");
-
-          setEndScreen("showEnd");
-          gameStart.current = false;
+          endGame();
         }
       }, snakeUpdateTime - 50);
     }
@@ -171,8 +207,7 @@ export default function SnakeGame(highscores) {
       setTimeout(() => {
         if (snakeDirection.current === "down") {
           // alert("you stink loser");
-          setEndScreen("showEnd");
-          gameStart.current = false;
+          endGame();
         }
       }, snakeUpdateTime - 50);
     }
@@ -195,17 +230,12 @@ export default function SnakeGame(highscores) {
     // {destructuring, stuff, wow}
     // const { a, b } = { a: "hello", b: "hello from b" };
 
-    const snakeToSnakeCollided = snakeToSnakeCollision(
-      snake,
-      gameStart,
-      setEndScreen
-    );
+    const snakeToSnakeCollided = snakeToSnakeCollision(snake, endGame);
 
     const snakeToWallCollided = snakeToWallCollision(
       snake,
       grid.length,
-      gameStart,
-      setEndScreen
+      endGame
     );
 
     return {
@@ -290,14 +320,14 @@ export default function SnakeGame(highscores) {
     // }
   };
 
-  // const endStartEvent = useMemo(() => {
-  //   console.log("start now", firstStart);
-  //   if (firstStart) {
-  //     startScreenClass.current = "showStart";
-  //   } else {
-  //     startScreenClass.current = "";
-  //   }
-  // }, [firstStart]);
+  const endStartEvent = useMemo(() => {
+    console.log("start now", firstStart);
+    if (firstStart) {
+      startScreenClass.current = "showStart";
+    } else {
+      startScreenClass.current = "";
+    }
+  }, [firstStart]);
 
   function smartGameStartClick() {
     if (firstStart === true) {
@@ -396,8 +426,17 @@ export default function SnakeGame(highscores) {
 
           <div className={`popUpScreen saveScoreScreen ${saveScoreClass}`}>
             <h1 className="newHigh">NEW HIGHSCORE!</h1>
+            <h2 className="points">{snake.length - 2} POINTS!</h2>
             <h2 className="newSubText">TYPE IN 3 LETTERS TO SAVE</h2>
-
+            <button
+              className="closeSave"
+              onClick={() => {
+                setSaveScoreClass("");
+                setLeaderboardClass("showLeaderboard");
+              }}
+            >
+              X
+            </button>
             <form
               onSubmit={() => {
                 alert("submit");

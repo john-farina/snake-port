@@ -434,14 +434,24 @@ body {
     align-items: center;
     justify-content: start;
     .newHigh {
-      font-size: 1.4rem;
-      margin-left: 10px;
+      font-size: 1.9rem;
+      padding-left: 12px;
       margin: 0;
-      margin-top: 30px;
+      margin-top: 40px;
+    }
+    .points {
+      font-size: 1.7rem;
+      margin: 0;
+      margin-top: 7px;
+      margin-bottom: 10px;
+      margin-left: 20px;
+      color: gold;
+      text-shadow: 0px 0px 5px gold;
     }
     .newSubText {
       margin: 0;
-      font-size: 0.8rem;
+      font-size: 0.6rem;
+      margin-bottom: -5px;
     }
 
     .scoreForm {
@@ -477,10 +487,17 @@ body {
           &::placeholder {
             opacity: 20%;
             color: black;
+            transition: text-shadow 0.2s;
           }
 
           &:hover {
             border: dashed 6px rgb(215, 188, 29);
+
+            &::placeholder {
+              opacity: 20%;
+              color: gold;
+              text-shadow: 0px 0px 10px gold;
+            }
           }
 
           &:active,
@@ -488,6 +505,12 @@ body {
             outline: none;
             border: dashed 6px rgb(175, 175, 175);
             color: rgb(202, 201, 201);
+            text-shadow: 0px 0px 10px rgb(175, 175, 175);
+
+            &::placeholder {
+              opacity: 20%;
+              color: rgb(175, 175, 175);
+            }
           }
         }
 
@@ -498,23 +521,37 @@ body {
           width: 40px;
           height: 40px;
           background-color: rgba(0, 0, 0, 0%);
-          border: dashed 3.5px rgb(50, 210, 50);
+          border: dashed 4px black;
           border-radius: 6px;
           margin-right: 5px;
+          margin-top: -4px;
 
           .saveIcon {
-            filter: invert(50%);
+            opacity: 30%;
           }
 
           &:hover {
-            border: dashed 3.5px white;
-            background-color: rgb(50, 210, 50);
+            border: dashed 3.5px rgb(52, 201, 52);
             .saveIcon {
-              filter: invert(100%);
+              opacity: 100%;
+              filter: invert(100%) blur(1px);
             }
           }
         }
       }
+    }
+
+    .closeSave {
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0%);
+      border: none;
+      font-family: Arcade;
+      font-size: 1.6rem;
+      color: red;
+      text-shadow: 0px 0px 10px red;
     }
   }
 
