@@ -109,13 +109,12 @@ export default function SnakeGame(highscores) {
     } else {
       //wait 5 sec then show leadboards
       setEndScreen("showEnd");
-      setTimeout(() => {
-        setEndScreen("");
-        setLeaderboardClass("showLeaderboard");
-      }, 5000);
+      // setTimeout(() => {
+      //   console.log(endScreenClass);
+      //   setEndScreen("");
+      //   setLeaderboardClass("showLeaderboard");
+      // }, 5000);
     }
-
-    console.log("score is higher?", scoreIsHigher);
 
     // (basically a return)
     gameStart.current = false;
@@ -467,6 +466,15 @@ export default function SnakeGame(highscores) {
               score: {scoreOne}
               {scoreTwo}
               {scoreThree}
+            </p>
+            <p
+              className="highscores"
+              onClick={() => {
+                setEndScreen("");
+                setLeaderboardClass("showLeaderboard");
+              }}
+            >
+              ALL HIGHSCORES
             </p>
             <p
               onClick={() => {
