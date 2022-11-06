@@ -1,0 +1,542 @@
+@font-face {
+  font-family: Arcade;
+  src: url("./fonts/Gameboy.ttf");
+}
+
+$deviceWidth: 370px;
+$deviceHeight: auto;
+$greenScreen: rgb(104, 146, 30);
+$darkerGreen: rgb(95, 126, 75);
+
+body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(233, 232, 226);
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 100%;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.pageContainer {
+  display: flex;
+  position: relative;
+
+  .plasticTexture {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    filter: invert(80%);
+    opacity: 30%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+.extraContainer {
+  display: none;
+  flex-direction: column;
+}
+
+.device {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  justify-content: center;
+  margin-top: 10px;
+  background-color: rgb(233, 232, 226);
+  width: $deviceWidth;
+  height: $deviceHeight;
+  border-radius: 3px;
+  gap: 10px;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  .topLight {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    margin-left: 5px;
+    margin-top: 10px;
+    background-color: rgb(164, 116, 116);
+    animation: blink 0.9s infinite ease-in-out;
+    z-index: 2;
+  }
+
+  .middleBtns {
+    width: 100%;
+    height: 50px;
+    padding-left: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    z-index: 2;
+
+    .resetContainer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 10px;
+      margin-left: 5px;
+
+      .functionButtons {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.3rem;
+        height: 40px;
+        width: 15px;
+        background-color: gray;
+        border-radius: 4px;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.387);
+        transition: box-shadow 0.2s;
+        border: solid 1.5px rgb(109, 109, 109);
+
+        &:active {
+          box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.064);
+        }
+      }
+
+      p {
+        margin: 0;
+        cursor: default;
+        font-weight: 700;
+        font-size: 0.7rem;
+        color: transparent;
+        background: rgb(127, 127, 125);
+        -webkit-background-clip: text;
+        text-shadow: 2px 5px 5px rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+
+  .buttonContainer {
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 200px;
+    margin-top: 20px;
+
+    .top,
+    .middle,
+    .bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 180px;
+
+      button {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 95%;
+        height: 100%;
+        border-radius: 10px;
+        border: solid 3.3px black;
+        box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.387);
+        transition: box-shadow 0.2s;
+
+        &:active {
+          box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.042);
+          filter: brightness(90%);
+        }
+
+        &:hover {
+          filter: brightness(99%);
+        }
+      }
+
+      .upButton {
+        background-color: rgb(219, 105, 105);
+        border-color: #b64040;
+        height: 49%;
+      }
+
+      .downButton {
+        background-color: rgb(93, 110, 237);
+        border-color: #3b49b2;
+        height: 49%;
+      }
+
+      .leftButton {
+        background-color: rgb(218, 221, 107);
+        border-color: #babf34;
+      }
+
+      .rightButton {
+        background-color: rgb(126, 205, 119);
+        border-color: #4ea448;
+      }
+
+      .arrow {
+        width: 30px;
+      }
+
+      .upIcon {
+        margin-bottom: 4px;
+        filter: invert(33%) sepia(12%) saturate(2656%) hue-rotate(314deg)
+          brightness(94%) contrast(86%);
+      }
+
+      .leftIcon {
+        transform: rotate(-90deg);
+        margin-right: 5px;
+        filter: invert(51%) sepia(88%) saturate(241%) hue-rotate(23deg)
+          brightness(103%) contrast(88%);
+      }
+
+      .downIcon {
+        transform: rotate(180deg);
+        margin-top: 5px;
+        filter: invert(28%) sepia(29%) saturate(1308%) hue-rotate(193deg)
+          brightness(91%) contrast(99%);
+      }
+
+      .rightIcon {
+        transform: rotate(90deg);
+        margin-left: 4px;
+        filter: invert(46%) sepia(20%) saturate(879%) hue-rotate(68deg)
+          brightness(96%) contrast(90%);
+      }
+    }
+
+    .top {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+}
+
+@keyframes blink {
+  0% {
+    background-color: rgb(164, 116, 116);
+  }
+  50% {
+    background-color: rgb(170, 33, 33);
+  }
+  100% {
+    background-color: rgb(164, 116, 116);
+  }
+}
+
+.gridContainer {
+  z-index: 2;
+  position: relative;
+  margin-top: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: $darkerGreen;
+
+  .screenTexture {
+    pointer-events: none;
+    position: absolute;
+    z-index: 7;
+    width: 100%;
+    height: 100%;
+    opacity: 10%;
+  }
+
+  .topRow {
+    top: 0;
+    right: 0;
+    margin-top: -30px;
+    margin-right: 0px;
+    width: 100%;
+    height: 25px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .title {
+      cursor: default;
+      font-size: 2.5rem;
+      margin-left: 10px;
+      color: transparent;
+      background: rgb(127, 127, 125);
+      -webkit-background-clip: text;
+      text-shadow: 2px 5px 5px rgba(255, 255, 255, 0.7);
+      margin-bottom: 35px;
+    }
+
+    .scoreCounter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
+      height: 100%;
+      width: 50px;
+      background-color: $greenScreen;
+      border-radius: 3px;
+
+      .scoreScreen {
+        position: absolute;
+        height: 100%;
+        width: 50px;
+        opacity: 20%;
+      }
+
+      .number {
+        font-family: Arcade;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 22%;
+        height: 73%;
+        border: 2px solid rgba(25, 64, 26, 100%);
+        border-radius: 2px;
+
+        p {
+          color: rgb(25, 64, 26);
+          margin-top: 1px;
+          margin-bottom: 1px;
+          margin-left: 3px;
+          font-size: 0.6rem;
+          text-shadow: -0.5px 0.5px 1px rgba(15, 39, 16, 0.9);
+        }
+      }
+    }
+  }
+
+  .popUpScreen {
+    display: none;
+    font-family: Arcade;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 50%);
+    z-index: 2;
+    position: absolute;
+  }
+
+  .endScreen,
+  .startScreen {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      margin: 0;
+      text-align: center;
+    }
+
+    .words {
+      display: inline-block;
+      color: rgb(0, 0, 0);
+      text-shadow: 0px 5px 2px rgba(0, 0, 0, 0.155);
+      cursor: default;
+    }
+  }
+
+  .endScreen {
+    display: none;
+
+    .words {
+      margin-left: 20px;
+      font-size: 1.7rem;
+      animation: endMove 1.5s infinite steps(5);
+    }
+
+    .score {
+      margin-left: 10px;
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+
+    .retryBtn {
+      cursor: pointer;
+      position: absolute;
+      bottom: 0;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      color: rgb(166, 5, 5);
+      animation: glow 2s infinite steps(8);
+      transition: color 0.5s;
+    }
+    @keyframes glow {
+      0% {
+        color: black;
+        text-shadow: 0px 0px 10px rgba(252, 125, 125, 0%);
+      }
+      50% {
+        color: rgb(166, 5, 5);
+        text-shadow: 0px 0px 10px rgba(252, 125, 125, 100%);
+      }
+      90% {
+        color: rgb(0, 0, 0);
+        text-shadow: 0px 0px 10px rgba(252, 125, 125, 0%);
+      }
+      100% {
+        color: rgb(0, 0, 0);
+        text-shadow: 0px 0px 10px rgba(252, 125, 125, 0%);
+      }
+    }
+  }
+  .startScreen {
+    cursor: pointer;
+    display: none;
+
+    .words {
+      cursor: pointer;
+      font-size: 1rem;
+      animation: endMove 3s infinite steps(9);
+    }
+  }
+
+  .countDown {
+    display: none;
+
+    .numbers {
+      cursor: default;
+      font-size: 4rem;
+      animation: endMove 0.95s infinite steps(3);
+      margin-left: 10px;
+    }
+
+    .numWords {
+      margin-left: 40px;
+    }
+  }
+
+  .showEnd,
+  .showStart,
+  .showCountdown {
+    display: flex;
+  }
+}
+
+@keyframes endMove {
+  0% {
+    transform: scale(100%);
+  }
+  50% {
+    transform: scale(120%);
+  }
+  100% {
+    transform: scale(100%);
+  }
+}
+
+.gridRow {
+  display: flex;
+  padding: 0;
+  line-height: 0;
+}
+
+.box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: $greenScreen;
+  border: solid 0.2px rgba(91, 129, 26, 30%);
+  color: rgba(51, 51, 51, 0);
+  font-size: 0.4rem;
+  overflow: hidden;
+}
+
+.snake {
+  background-color: rgb(26, 69, 12);
+  color: black;
+}
+
+.food {
+  background-color: white;
+  color: black;
+  box-shadow: 0px 0px 10px 3px white;
+}
+
+.snakeHead {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  left: 0;
+  width: 8px;
+  height: 100%;
+
+  .eye {
+    width: 5px;
+    height: 5px;
+    background-color: rgb(21, 41, 26);
+    border-radius: 1px;
+  }
+}
+
+.left {
+  rotate: 180deg;
+}
+
+.up {
+  rotate: -90deg;
+}
+
+.down {
+  rotate: 90deg;
+}
+
+.right {
+  rotate: -360deg;
+}
+
+.middleRow {
+  width: 100%;
+  height: 40px;
+  margin-top: 13px;
+  margin-bottom: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+
+  .leaderBoardBtn {
+    background-color: rgb(101, 101, 101);
+    border: 2px solid rgb(70, 69, 69);
+    border-radius: 50px;
+    width: 38px;
+    height: 38px;
+    margin-right: 10px;
+
+    .leadImage {
+      filter: invert(80%);
+    }
+
+    &:hover {
+      filter: brightness(80%);
+    }
+    &:active {
+      filter: brightness(90%);
+    }
+  }
+}
