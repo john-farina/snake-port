@@ -1,26 +1,24 @@
 import React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
-// import "./App.scss";
-// import "normalize.css";
-import drawGrid from "./functions/drawGrid";
-import moveSnakeCoords from "./functions/moveSnakeCoords";
-import randomFoodCoords from "./functions/randomFoodCoords";
-import growSnakeByOne from "./functions/growSnakeByOne";
-import snakeToSnakeCollision from "./functions/snakeToSnakeCollision";
-import getStyledNum from "./functions/getStyledNum";
-import scoreBasedQuotes from "./functions/scoreBasedQuotes";
-import ArrowSvg from "./arrowsvg.svg";
+import drawGrid from "../functions/drawGrid";
+import moveSnakeCoords from "../functions/moveSnakeCoords";
+import randomFoodCoords from "../functions/randomFoodCoords";
+import growSnakeByOne from "../functions/growSnakeByOne";
+import snakeToSnakeCollision from "../functions/snakeToSnakeCollision";
+import getStyledNum from "../functions/getStyledNum";
+import scoreBasedQuotes from "../functions/scoreBasedQuotes";
+import ArrowSvg from "./images/arrowsvg.svg";
 import ScreenTexture from "./images/screentext.png";
 import SmallScreenTexture from "./images/smallScreentext.png";
 import PlasticTexture from "./images/plasticText.jpg";
-// HEAD === Snake Head
+import SaveIcon from "./images/save.svg";
 
+// HEAD === Snake Head
 // BODY === Snake Body
 // TAIL === Snake Tail
-// 15x15 grid always (idk why thats what i chose) (test)
-// NICE I GOT IT TO WORK ON MY NEW COMP (good to know)
+// 15x15 grid always (idk why but thats what i chose)
 
-export default function SnakeGame() {
+export default function SnakeGame(highscores) {
   let [snake, setSnake] = useState([
     [12, 12],
     [12, 13],
@@ -31,23 +29,25 @@ export default function SnakeGame() {
     [snake, foodCoords.current]
   );
   const snakeDirection = useRef("left");
-  const gameStart = useRef(false);
-
-  const firstStart = useRef(true);
-  const [endScreenClass, setEndScreen] = useState("");
-  const startScreenClass = useRef("");
   let snakeUpdateTime = 120;
-  const [firstXStart, setFirstXStart] = useState(true);
-
-  // when firstXStart equals true it will show the first starting screen
-
-  // set firstXStart to true when first loaded, and set it to false when started for first time (wont pop back up unless reseted device)
-
-  // users can hit a replay button on screen when ended (not showing first start screen)
-  // start screen will have a 3 sec count down when players hit start (then setFirstXStart to false)
-
-  const [timer, setTimer] = useState(3);
+  const gameStart = useRef(false);
+  const [firstStart, setFirstStart] = useState(true);
+  const startScreenClass = useRef("");
   const [countDownClass, setCountDownClass] = useState("");
+  const [timer, setTimer] = useState(3);
+  const [endScreenClass, setEndScreen] = useState("");
+  const [leaderboardClass, setLeaderboardClass] = useState("showLeaderboard");
+  const [saveScoreClass, setSaveScoreClass] = useState("");
+
+  console.log("ALL PLAYERS SCORE MODEL", highscores.highscores);
+
+  function clearAllScreens() {
+    setEndScreen("");
+    startScreenClass.current = "";
+    setCountDownClass("");
+    setLeaderboardClass("");
+    setSaveScoreClass("");
+  }
 
   function resetGame() {
     setSnake([
@@ -57,15 +57,13 @@ export default function SnakeGame() {
     foodCoords.current = randomFoodCoords(snake);
     snakeDirection.current = "left";
     gameStart.current = false;
-    setFirstXStart(true);
+    setFirstStart(true);
     setTimer(3);
-    setEndScreen("");
-    setCountDownClass("");
+    clearAllScreens();
   }
 
   function countDownThreeThenStart() {
-    let newTime = timer;
-    newTime = 3;
+    let newTime = 3;
 
     setCountDownClass("showCountdown");
 
@@ -99,9 +97,9 @@ export default function SnakeGame() {
   }
 
   function startGame() {
-    if (firstXStart === true) {
+    if (firstStart === true) {
       //set first start to false
-      setFirstXStart(false);
+      setFirstStart(false);
 
       //set timer for 3 sec (show animation) THEN
       // gameStart.current = true; (start the actual game)
@@ -286,23 +284,23 @@ export default function SnakeGame() {
     //     startGame();
     //   } else {
     //     gameStart.current = false;
-    //     setFirstXStart(true);
+    //     setFirstStart(true);
     //     setEndScreen("");
     //   }
     // }
   };
 
-  const endStartEvent = useMemo(() => {
-    console.log("start now", firstXStart);
-    if (firstXStart) {
-      startScreenClass.current = "showStart";
-    } else {
-      startScreenClass.current = "";
-    }
-  }, [firstXStart]);
+  // const endStartEvent = useMemo(() => {
+  //   console.log("start now", firstStart);
+  //   if (firstStart) {
+  //     startScreenClass.current = "showStart";
+  //   } else {
+  //     startScreenClass.current = "";
+  //   }
+  // }, [firstStart]);
 
   function smartGameStartClick() {
-    if (firstXStart === true) {
+    if (firstStart === true) {
       startGame();
     }
   }
@@ -315,13 +313,114 @@ export default function SnakeGame() {
     }
   }
 
+  function scoreLoop(highscores) {
+    let arr = highscores.highscores;
+    let reactArray = [];
+
+    for (let i = 0; i < arr.length; i++) {
+      if (i === 0) {
+        reactArray.push(
+          <div className="score first">
+            <p className="playerName">{arr[i].name}</p>
+            <p className="playerName">-</p>
+            <p className="playerScore">
+              {getStyledNum(arr[i].score, 1)}
+              {getStyledNum(arr[i].score, 2)}
+              {getStyledNum(arr[i].score, 3)}
+            </p>
+          </div>
+        );
+      } else if (i === 1) {
+        reactArray.push(
+          <div className="score second">
+            <p className="playerName">{arr[i].name}</p>
+            <p className="playerName">-</p>
+            <p className="playerScore">
+              {getStyledNum(arr[i].score, 1)}
+              {getStyledNum(arr[i].score, 2)}
+              {getStyledNum(arr[i].score, 3)}
+            </p>
+          </div>
+        );
+      } else if (i === 2) {
+        reactArray.push(
+          <div className="score third">
+            <p className="playerName">{arr[i].name}</p>
+            <p className="playerName">-</p>
+            <p className="playerScore">
+              {getStyledNum(arr[i].score, 1)}
+              {getStyledNum(arr[i].score, 2)}
+              {getStyledNum(arr[i].score, 3)}
+            </p>
+          </div>
+        );
+      } else {
+        reactArray.push(
+          <div className="score">
+            <p className="playerName">{arr[i].name}</p>
+            <p className="playerName">-</p>
+            <p className="playerScore">
+              {getStyledNum(arr[i].score, 1)}
+              {getStyledNum(arr[i].score, 2)}
+              {getStyledNum(arr[i].score, 3)}
+            </p>
+          </div>
+        );
+      }
+    }
+
+    return reactArray;
+  }
+
   return (
     <div className="pageContainer" onClick={() => smartGameStartClick()}>
       <img src={PlasticTexture} className="plasticTexture" alt="" />
       <main className="device" onKeyDown={handleKeyDown} tabIndex="0">
         <div className="topLight"></div>
-        <div className="gridContainer">
+        <div className="deviceScreen">
           <img src={ScreenTexture} className="screenTexture" alt="" />
+
+          <div className={`popUpScreen highScores ${leaderboardClass}`}>
+            <h1 className="boardTitle">HIGHSCORES</h1>
+            <div className="scoresContainer">{scoreLoop(highscores)}</div>
+
+            <p
+              onClick={() => {
+                restartGameAfterEnd();
+              }}
+              className="retryBtn"
+            >
+              PLAY AGAIN?
+            </p>
+          </div>
+
+          <div className={`popUpScreen saveScoreScreen ${saveScoreClass}`}>
+            <h1 className="newHigh">NEW HIGHSCORE!</h1>
+            <h2 className="newSubText">TYPE IN 3 LETTERS TO SAVE</h2>
+
+            <form
+              onSubmit={() => {
+                alert("submit");
+              }}
+              className="scoreForm"
+              action=""
+            >
+              <div className="holder">
+                <input
+                  className="scoreInput"
+                  placeholder={"JDF"}
+                  type="text"
+                  name="name"
+                  id="name"
+                  maxLength={3}
+                />
+
+                <button className="scoreSubmit" type="submit">
+                  <img src={SaveIcon} className="saveIcon" alt="" />
+                </button>
+              </div>
+            </form>
+          </div>
 
           <div className={`popUpScreen endScreen ${endScreenClass}`}>
             <p className="words">{scoreBasedQuotes(snake.length - 2)}</p>
