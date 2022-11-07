@@ -12,7 +12,6 @@ import ScreenTexture from "./images/screentext.png";
 import SmallScreenTexture from "./images/smallScreentext.png";
 import PlasticTexture from "./images/plasticText.jpg";
 import SaveIcon from "./images/save.svg";
-import { validate } from "webpack";
 
 // HEAD === Snake Head
 // BODY === Snake Body
