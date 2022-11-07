@@ -12,6 +12,7 @@ import ScreenTexture from "./images/screentext.png";
 import SmallScreenTexture from "./images/smallScreentext.png";
 import PlasticTexture from "./images/plasticText.jpg";
 import SaveIcon from "./images/save.svg";
+import TrophyIcon from "./images/trophy.svg";
 
 // HEAD === Snake Head
 // BODY === Snake Body
@@ -624,7 +625,9 @@ export default function SnakeGame(scores) {
                 }
               }}
               className="leaderboardBtn"
-            ></button>
+            >
+              <img src={TrophyIcon} className="trophyIcon" alt="" />
+            </button>
             <p>HIGHSCORES</p>
           </div>
         </div>
