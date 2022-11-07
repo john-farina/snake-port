@@ -4,12 +4,21 @@ export default function growSnakeByOne(snakeCoords, snakeDirection) {
   let coords = _.cloneDeep(snakeCoords);
 
   if (snakeDirection === "left") {
-    coords.push([
-      //|tail row,
-      coords[coords.length - 1][0],
-      // |tail row value, tail column + 1; (add to right of tail)
-      coords[coords.length - 1][1] + 1,
-    ]);
+    if (coords[coords.length - 1][1] === 14) {
+      coords.push([
+        //|tail row minus one (going down so its rows)
+        coords[coords.length - 1][0] - 1,
+        //| tail column the same as tail (want it to be the same just up one row)
+        coords[coords.length - 1][1],
+      ]);
+    } else {
+      coords.push([
+        //|tail row,
+        coords[coords.length - 1][0],
+        // |tail row value, tail column + 1; (add to right of tail)
+        coords[coords.length - 1][1] + 1,
+      ]);
+    }
   }
 
   if (snakeDirection === "right") {

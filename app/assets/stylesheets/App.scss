@@ -88,7 +88,6 @@ body {
     justify-content: space-between;
     gap: 10px;
     z-index: 2;
-    // background-color: red;
 
     .resetContainer {
       display: flex;
@@ -133,12 +132,12 @@ body {
     .leaderboardContainer {
       margin-top: 10px;
       margin-right: 10px;
-      // background-color: blue;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       gap: 2px;
+
       .leaderboardBtn {
         display: flex;
         align-items: center;
