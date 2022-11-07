@@ -396,13 +396,16 @@ export default function SnakeGame(scores) {
   return (
     <div className="pageContainer" onClick={() => smartGameStartClick()}>
       <img src={PlasticTexture} className="plasticTexture" alt="" />
+
       <main className="device" onKeyDown={handleKeyDown} tabIndex="0">
         <div className="topLight"></div>
+
         <div className="deviceScreen">
           <img src={ScreenTexture} className="screenTexture" alt="" />
 
           <div className={`popUpScreen highScores ${leaderboardClass}`}>
             <h1 className="boardTitle">HIGHSCORES</h1>
+
             <div className="scoresContainer">{scoreLoop(highscores)}</div>
 
             <p
@@ -417,8 +420,11 @@ export default function SnakeGame(scores) {
 
           <div className={`popUpScreen saveScoreScreen ${saveScoreClass}`}>
             <h1 className="newHigh">NEW HIGHSCORE!</h1>
+
             <h2 className="points">{snake.length - 2} POINTS!</h2>
+
             <h2 className="newSubText">TYPE IN 3 LETTERS TO SAVE</h2>
+
             <button
               className="closeSave"
               onClick={() => {
@@ -428,6 +434,7 @@ export default function SnakeGame(scores) {
             >
               X
             </button>
+
             <form
               onSubmit={(event) => {
                 let tempScores = highscores.highscores;
@@ -439,10 +446,6 @@ export default function SnakeGame(scores) {
                   created_at: undefined,
                   updated_at: undefined,
                 });
-
-                // if (tempScores.length >= 11) {
-                //   tempScores.pop();
-                // }
 
                 setHighscores({ highscores: tempScores });
                 setSaveScoreClass("");
@@ -481,11 +484,13 @@ export default function SnakeGame(scores) {
 
           <div className={`popUpScreen endScreen ${endScreenClass}`}>
             <p className="words">{scoreBasedQuotes(snake.length - 2)}</p>
+
             <p className="score">
               score: {scoreOne}
               {scoreTwo}
               {scoreThree}
             </p>
+
             <p
               className="highscores"
               onClick={() => {
@@ -495,6 +500,7 @@ export default function SnakeGame(scores) {
             >
               ALL HIGHSCORES
             </p>
+
             <p
               onClick={() => {
                 restartGameAfterEnd();
@@ -508,7 +514,6 @@ export default function SnakeGame(scores) {
           <div
             className={`popUpScreen startScreen ${startScreenClass.current}`}
           >
-            {/* <h1>hi</h1> */}
             <p className="words">Press Anything To Start!</p>
           </div>
 
@@ -518,14 +523,18 @@ export default function SnakeGame(scores) {
 
           <div className="topRow">
             <h1 className="title">s n a k e.</h1>
+
             <div className="scoreCounter">
               <img src={SmallScreenTexture} className="scoreScreen" alt="" />
+
               <div className="number">
                 <p>{scoreOne}</p>
               </div>
+
               <div className="number">
                 <p>{scoreTwo}</p>
               </div>
+
               <div className="number">
                 <p>{scoreThree}</p>
               </div>
@@ -549,6 +558,7 @@ export default function SnakeGame(scores) {
                       <div className={`box snake ${snakeDirection.current}`}>
                         <div className="snakeHead">
                           <div className="eye"></div>
+
                           <div className="eye"></div>
                         </div>
                       </div>
@@ -572,6 +582,7 @@ export default function SnakeGame(scores) {
                 resetGame();
               }}
             ></button>
+
             <p>RESET</p>
           </div>
         </div>
