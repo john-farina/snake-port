@@ -154,6 +154,7 @@ body {
         border: solid 1.5px rgb(109, 109, 109);
 
         .trophyIcon {
+          pointer-events: none;
           height: 20px;
           filter: invert(35%);
         }
