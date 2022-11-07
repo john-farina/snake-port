@@ -607,7 +607,9 @@ export default function SnakeGame(scores) {
               onClick={() => {
                 if (leaderboardOpen.current && !gameStart.current) {
                   leaderboardOpen.current = false;
+
                   setFirstStart(true);
+
                   resetGame();
                 } else if (!leaderboardOpen.current && !gameStart.current) {
                   leaderboardOpen.current = true;
@@ -615,20 +617,10 @@ export default function SnakeGame(scores) {
                   clearAllScreens();
 
                   setLeaderboardClass("showLeaderboard");
+
                   setFirstStart(false);
+
                   gameStart.current = false;
-                  // setTimeout(() => {
-                  //   setFirstStart(false);
-
-                  //   gameStart.current = false;
-
-                  //   clearAllScreens();
-
-                  //   setLeaderboardClass("showLeaderboard");
-                  //   setTimeout(() => {
-                  //     gameStart.current = false;
-                  //   }, 2000);
-                  // }, 2);
                 }
               }}
               className="leaderboardBtn"
