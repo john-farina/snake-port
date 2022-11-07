@@ -39,9 +39,5 @@ export default function growSnakeByOne(snakeCoords, snakeDirection) {
     ]);
   }
 
-  // for (let i = 0; i < coords.length; i++) {
-  //   console.log(coords[i]);
-  // }
-
   return coords;
 }

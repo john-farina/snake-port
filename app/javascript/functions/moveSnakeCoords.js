@@ -2,7 +2,7 @@ const _ = require("lodash");
 
 export default function moveSnakeCoords(snakeCoords, direction, gridLength) {
   let snakeCoord = _.cloneDeep(snakeCoords);
-  //remove tail in array then place new head in front
+
   snakeCoord.pop();
 
   if (direction === "left") {
@@ -33,27 +33,3 @@ export default function moveSnakeCoords(snakeCoords, direction, gridLength) {
     return snakeCoord;
   }
 }
-
-//////un-used collision
-//left
-// if (snakeCoord[0][1] === 0) {
-//   setGameStart(false);
-// }
-
-//right
-//WALL DETECTION
-// if (snakeCoord[0][1] === gridLength - 1) {
-//   setGameStart(false);
-// }
-
-//up
-// if (snakeCoord[0][0] === 0) {
-//   alert("hit");
-//   setGameStart(false);
-// }
-
-//down
-// if (snakeCoord[0][0] === gridLength - 1) {
-//   alert("hit");
-//   setGameStart(false);
-// }

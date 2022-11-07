@@ -1,6 +1,7 @@
 export default function randomFoodCoords(snakeCoords) {
   let foodCoord;
   let num = 0;
+
   if (snakeCoords) {
     num = snakeCoords.length;
   }
@@ -23,8 +24,8 @@ export default function randomFoodCoords(snakeCoords) {
       snakeCoords[i][0] === foodCoord[0] &&
       snakeCoords[i][1] === foodCoord[1]
     ) {
-      console.log("its a match");
       num = num - 1;
+
       break;
     }
   }

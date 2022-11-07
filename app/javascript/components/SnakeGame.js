@@ -12,6 +12,7 @@ import ScreenTexture from "./images/screentext.png";
 import SmallScreenTexture from "./images/smallScreentext.png";
 import PlasticTexture from "./images/plasticText.jpg";
 import SaveIcon from "./images/save.svg";
+import { validate } from "webpack";
 
 // HEAD === Snake Head
 // BODY === Snake Body
@@ -20,7 +21,8 @@ import SaveIcon from "./images/save.svg";
 
 //when game ends show screen if they want to save score
 
-export default function SnakeGame(highscores) {
+export default function SnakeGame(scores) {
+  let [highscores, setHighscores] = useState(scores);
   let [snake, setSnake] = useState([
     [12, 12],
     [12, 13],
@@ -41,13 +43,15 @@ export default function SnakeGame(highscores) {
   const [leaderboardClass, setLeaderboardClass] = useState("");
   const [saveScoreClass, setSaveScoreClass] = useState("");
 
-  // console.log("ALL PLAYERS SCORE MODEL", highscores.highscores);
-
   function clearAllScreens() {
     setEndScreen("");
+
     startScreenClass.current = "";
+
     setCountDownClass("");
+
     setLeaderboardClass("");
+
     setSaveScoreClass("");
   }
 
@@ -76,12 +80,11 @@ export default function SnakeGame(highscores) {
     setCountDownClass("showCountdown");
 
     const interval = setInterval(function () {
-      console.log(newTime);
-
       if (newTime <= 0) {
-        console.log("GO");
         setCountDownClass("");
+
         gameStart.current = true;
+
         clearInterval(interval);
       }
 
@@ -95,25 +98,18 @@ export default function SnakeGame(highscores) {
     let scoreIsHigher = false;
     let leaderboard = highscores.highscores;
 
-    // SHOW THE NICE-JOB SCREEN
-
     for (let i = 0; i < leaderboard.length; i++) {
       if (snake.length - 2 >= leaderboard[i].score) {
         scoreIsHigher = true;
       }
     }
 
-    if (scoreIsHigher) {
+    if (scoreIsHigher || (leaderboard.length === 0 && snake.length - 2 != 0)) {
       setEndScreen("");
+
       setSaveScoreClass("showSave");
     } else {
-      //wait 5 sec then show leadboards
       setEndScreen("showEnd");
-      // setTimeout(() => {
-      //   console.log(endScreenClass);
-      //   setEndScreen("");
-      //   setLeaderboardClass("showLeaderboard");
-      // }, 5000);
     }
 
     // (basically a return)
@@ -121,27 +117,28 @@ export default function SnakeGame(highscores) {
   }
 
   function restartGameAfterEnd() {
-    setEndScreen("");
+    clearAllScreens();
+
     setTimer(3);
+
     setSnake([
       [12, 12],
       [12, 13],
     ]);
-    setLeaderboardClass("");
-    setSaveScoreClass("");
+
     foodCoords.current = randomFoodCoords(snake);
+
     snakeDirection.current = "left";
+
     gameStart.current = false;
+
     countDownThreeThenStart();
   }
 
   function startGame() {
     if (firstStart === true) {
-      //set first start to false
       setFirstStart(false);
 
-      //set timer for 3 sec (show animation) THEN
-      // gameStart.current = true; (start the actual game)
       countDownThreeThenStart();
     } else {
       countDownThreeThenStart();
@@ -150,19 +147,17 @@ export default function SnakeGame(highscores) {
 
   function eatCube() {
     setSnake((s) => growSnakeByOne(s, snakeDirection.current));
+
     foodCoords.current = randomFoodCoords(snake);
   }
 
   function foodToHeadCollision(snakeHeadCoords, foodCoords) {
-    // console.time("foodToHeadCollision");
     if (
       snakeHeadCoords[0][0] === foodCoords[0] &&
       snakeHeadCoords[0][1] === foodCoords[1]
     ) {
       eatCube();
-    } else {
     }
-    // console.timeEnd("foodToHeadCollision");
   }
 
   function snakeToWallCollision(snake, gridSize, endGame) {
@@ -170,42 +165,34 @@ export default function SnakeGame(highscores) {
     let headRow = snake[0][0];
     let headColumn = snake[0][1];
 
-    // if going left & snakeColumn = 0 (LOOSE)
     if (headColumn === 0) {
       //time out so u can quickly move and avoid dying
       setTimeout(() => {
         if (snakeDirection.current === "left") {
-          // alert("you stink loser");
           endGame();
         }
       }, snakeUpdateTime - 50);
     }
 
-    // if going right & snakeColumn = gridSize (LOOSE)
     if (headColumn === size) {
       setTimeout(() => {
         if (snakeDirection.current === "right") {
-          // alert("you stink loser");
           endGame();
         }
       }, snakeUpdateTime - 50);
     }
 
-    // if going up & snakeRow = 0 (LOOSE)
     if (headRow === 0) {
       setTimeout(() => {
         if (snakeDirection.current === "up") {
-          // alert("you stink loser");
           endGame();
         }
       }, snakeUpdateTime - 50);
     }
 
-    // if going down & snakeRow = gridSize(LOOSE)
     if (headRow === size) {
       setTimeout(() => {
         if (snakeDirection.current === "down") {
-          // alert("you stink loser");
           endGame();
         }
       }, snakeUpdateTime - 50);
@@ -226,9 +213,6 @@ export default function SnakeGame(highscores) {
   }, [snake]);
 
   const { snakeToSnakeCollis, snakeToWallCollis } = useMemo(() => {
-    // {destructuring, stuff, wow}
-    // const { a, b } = { a: "hello", b: "hello from b" };
-
     const snakeToSnakeCollided = snakeToSnakeCollision(snake, endGame);
 
     const snakeToWallCollided = snakeToWallCollision(
@@ -282,16 +266,6 @@ export default function SnakeGame(highscores) {
   }
 
   const handleKeyDown = (event, direction) => {
-    // console.log("pressed ", event);
-
-    // if (event.key === "f") {
-    //   eatCube();
-    // }
-
-    // if (event.key === "p") {
-    //   restartGameAfterEnd();
-    // }
-
     if (event.key === "ArrowUp" || event === "MoveUp") {
       allClicks("up");
     }
@@ -308,6 +282,13 @@ export default function SnakeGame(highscores) {
       allClicks("right");
     }
 
+    /////////////////// DEV TOOLS
+    // if (event.key === "f") {
+    //   eatCube();
+    // }
+    // if (event.key === "p") {
+    //   restartGameAfterEnd();
+    // }
     // if (event.key === "Enter") {
     //   if (!gameStart.current) {
     //     startGame();
@@ -320,7 +301,6 @@ export default function SnakeGame(highscores) {
   };
 
   const endStartEvent = useMemo(() => {
-    console.log("start now", firstStart);
     if (firstStart) {
       startScreenClass.current = "showStart";
     } else {
@@ -346,16 +326,28 @@ export default function SnakeGame(highscores) {
     let arr = highscores.highscores;
     let reactArray = [];
 
+    arr.sort((x, y) => {
+      return y.score - x.score;
+    });
+
+    if (arr.length >= 11) {
+      for (let i = arr.length - 1; i >= 10; i--) {
+        arr.pop();
+      }
+    }
+
     for (let i = 0; i < arr.length; i++) {
+      let score = arr[i].score + 2;
+
       if (i === 0) {
         reactArray.push(
           <div className="score first">
             <p className="playerName">{arr[i].name}</p>
             <p className="playerName">-</p>
             <p className="playerScore">
-              {getStyledNum(arr[i].score, 1)}
-              {getStyledNum(arr[i].score, 2)}
-              {getStyledNum(arr[i].score, 3)}
+              {getStyledNum(score, 1)}
+              {getStyledNum(score, 2)}
+              {getStyledNum(score, 3)}
             </p>
           </div>
         );
@@ -365,9 +357,9 @@ export default function SnakeGame(highscores) {
             <p className="playerName">{arr[i].name}</p>
             <p className="playerName">-</p>
             <p className="playerScore">
-              {getStyledNum(arr[i].score, 1)}
-              {getStyledNum(arr[i].score, 2)}
-              {getStyledNum(arr[i].score, 3)}
+              {getStyledNum(score, 1)}
+              {getStyledNum(score, 2)}
+              {getStyledNum(score, 3)}
             </p>
           </div>
         );
@@ -377,9 +369,9 @@ export default function SnakeGame(highscores) {
             <p className="playerName">{arr[i].name}</p>
             <p className="playerName">-</p>
             <p className="playerScore">
-              {getStyledNum(arr[i].score, 1)}
-              {getStyledNum(arr[i].score, 2)}
-              {getStyledNum(arr[i].score, 3)}
+              {getStyledNum(score, 1)}
+              {getStyledNum(score, 2)}
+              {getStyledNum(score, 3)}
             </p>
           </div>
         );
@@ -389,9 +381,9 @@ export default function SnakeGame(highscores) {
             <p className="playerName">{arr[i].name}</p>
             <p className="playerName">-</p>
             <p className="playerScore">
-              {getStyledNum(arr[i].score, 1)}
-              {getStyledNum(arr[i].score, 2)}
-              {getStyledNum(arr[i].score, 3)}
+              {getStyledNum(score, 1)}
+              {getStyledNum(score, 2)}
+              {getStyledNum(score, 3)}
             </p>
           </div>
         );
@@ -437,13 +429,40 @@ export default function SnakeGame(highscores) {
               X
             </button>
             <form
-              onSubmit={() => {
-                alert("submit");
+              onSubmit={(event) => {
+                let tempScores = highscores.highscores;
+
+                tempScores.push({
+                  id: undefined,
+                  name: event.target.elements.name.value,
+                  score: Number(event.target.elements.score.value),
+                  created_at: undefined,
+                  updated_at: undefined,
+                });
+
+                // if (tempScores.length >= 11) {
+                //   tempScores.pop();
+                // }
+
+                setHighscores({ highscores: tempScores });
+                setSaveScoreClass("");
+                setLeaderboardClass("showLeaderboard");
+
+                return true;
               }}
               className="scoreForm"
-              action=""
+              action="/score/create"
+              method="post"
+              acceptCharset="UTF-8"
             >
               <div className="holder">
+                <input
+                  type="hidden"
+                  name="score"
+                  id="score"
+                  value={snake.length - 2}
+                />
+
                 <input
                   className="scoreInput"
                   placeholder={"JDF"}
