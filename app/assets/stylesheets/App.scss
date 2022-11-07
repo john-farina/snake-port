@@ -23,6 +23,7 @@ body {
 .pageContainer {
   display: flex;
   position: relative;
+  z-index: 1;
 
   .plasticTexture {
     position: fixed;
@@ -30,7 +31,7 @@ body {
     top: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 1;
+    z-index: 2;
     filter: invert(80%);
     opacity: 30%;
     background-position: center;
@@ -57,6 +58,8 @@ body {
   border-radius: 3px;
   gap: 10px;
   outline: none;
+  position: relative;
+  // z-index: 1;
 
   &:focus {
     outline: none;
@@ -85,6 +88,7 @@ body {
     justify-content: space-between;
     gap: 10px;
     z-index: 2;
+    // background-color: red;
 
     .resetContainer {
       display: flex;
@@ -113,16 +117,44 @@ body {
           box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.064);
         }
       }
+    }
 
+    p {
+      margin: 0;
+      cursor: default;
+      font-weight: 700;
+      font-size: 0.7rem;
+      color: transparent;
+      background: rgb(127, 127, 125);
+      -webkit-background-clip: text;
+      text-shadow: 2px 5px 5px rgba(255, 255, 255, 0.7);
+    }
+
+    .leaderboardContainer {
+      margin-top: 10px;
+      margin-right: 10px;
+      // background-color: blue;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      .leaderboardBtn {
+        z-index: 55;
+        cursor: pointer;
+        width: 30px;
+        height: 40px;
+        background-color: gray;
+        border-radius: 4px;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.387);
+        transition: box-shadow 0.2s;
+        border: solid 1.5px rgb(109, 109, 109);
+
+        &:active {
+          box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.064);
+        }
+      }
       p {
         margin: 0;
-        cursor: default;
-        font-weight: 700;
-        font-size: 0.7rem;
-        color: transparent;
-        background: rgb(127, 127, 125);
-        -webkit-background-clip: text;
-        text-shadow: 2px 5px 5px rgba(255, 255, 255, 0.7);
       }
     }
   }
@@ -243,8 +275,8 @@ body {
 }
 
 .deviceScreen {
-  z-index: 2;
   position: relative;
+  z-index: 3;
   margin-top: 35px;
   display: flex;
   align-items: center;

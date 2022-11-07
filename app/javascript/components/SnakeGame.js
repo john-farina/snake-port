@@ -41,6 +41,7 @@ export default function SnakeGame(scores) {
   const [endScreenClass, setEndScreen] = useState("");
   const [leaderboardClass, setLeaderboardClass] = useState("");
   const [saveScoreClass, setSaveScoreClass] = useState("");
+  const leaderboardOpen = useRef(false);
 
   function clearAllScreens() {
     setEndScreen("");
@@ -81,9 +82,12 @@ export default function SnakeGame(scores) {
     const interval = setInterval(function () {
       if (newTime <= 0) {
         setCountDownClass("");
-
-        gameStart.current = true;
-
+        console.log("timer", leaderboardClass);
+        if (leaderboardOpen.current) {
+          clearInterval(interval);
+        } else if (!leaderboardOpen.current) {
+          gameStart.current = true;
+        }
         clearInterval(interval);
       }
 
@@ -307,9 +311,17 @@ export default function SnakeGame(scores) {
     }
   }, [firstStart]);
 
-  function smartGameStartClick() {
-    if (firstStart === true) {
+  function smartGameStartClick(event) {
+    if (firstStart === true && event.target.className !== "leaderboardBtn") {
       startGame();
+    }
+  }
+
+  function leaderboardText() {
+    if (!firstStart) {
+      return "START GAME";
+    } else {
+      return "PLAY AGAIN";
     }
   }
 
@@ -393,7 +405,12 @@ export default function SnakeGame(scores) {
   }
 
   return (
-    <div className="pageContainer" onClick={() => smartGameStartClick()}>
+    <div
+      className="pageContainer"
+      onClick={(event) => {
+        smartGameStartClick(event);
+      }}
+    >
       <img src={PlasticTexture} className="plasticTexture" alt="" />
 
       <main className="device" onKeyDown={handleKeyDown} tabIndex="0">
@@ -413,7 +430,7 @@ export default function SnakeGame(scores) {
               }}
               className="retryBtn"
             >
-              PLAY AGAIN?
+              {leaderboardText()}
             </p>
           </div>
 
@@ -583,6 +600,40 @@ export default function SnakeGame(scores) {
             ></button>
 
             <p>RESET</p>
+          </div>
+
+          <div className="leaderboardContainer">
+            <button
+              onClick={() => {
+                if (leaderboardOpen.current && !gameStart.current) {
+                  leaderboardOpen.current = false;
+                  setFirstStart(true);
+                  resetGame();
+                } else if (!leaderboardOpen.current && !gameStart.current) {
+                  leaderboardOpen.current = true;
+
+                  clearAllScreens();
+
+                  setLeaderboardClass("showLeaderboard");
+                  setFirstStart(false);
+                  gameStart.current = false;
+                  // setTimeout(() => {
+                  //   setFirstStart(false);
+
+                  //   gameStart.current = false;
+
+                  //   clearAllScreens();
+
+                  //   setLeaderboardClass("showLeaderboard");
+                  //   setTimeout(() => {
+                  //     gameStart.current = false;
+                  //   }, 2000);
+                  // }, 2);
+                }
+              }}
+              className="leaderboardBtn"
+            ></button>
+            <p>HIGHSCORES</p>
           </div>
         </div>
 
