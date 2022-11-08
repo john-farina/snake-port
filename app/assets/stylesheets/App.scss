@@ -503,13 +503,14 @@ body {
       justify-content: center;
       width: 100%;
       // background-color: blue;
+      margin-top: -40px;
       height: 170px;
       gap: 10px;
       .holder {
         display: flex;
-        gap: 10px;
-        flex-direction: column;
-        align-items: end;
+        gap: 20px;
+        flex-direction: row;
+        align-items: center;
         justify-content: center;
 
         .scoreInput {
@@ -561,16 +562,15 @@ body {
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 40px;
-          height: 40px;
+          width: 50px;
+          height: 50px;
           background-color: rgba(0, 0, 0, 0%);
-          border: dashed 4px black;
+          border: dashed 5px black;
           border-radius: 6px;
           margin-right: 5px;
           margin-top: -4px;
 
           .saveIcon {
-            opacity: 30%;
             width: 98%;
           }
 
