@@ -21,7 +21,7 @@ import TrophyIcon from "./images/trophy.svg";
 
 //when game ends show screen if they want to save score
 
-export default function SnakeGame(scores) {
+export default function SnakeGame(scores, form_authenticity_token) {
   let [highscores, setHighscores] = useState(scores);
   let [snake, setSnake] = useState([
     [12, 12],
@@ -83,12 +83,15 @@ export default function SnakeGame(scores) {
     const interval = setInterval(function () {
       if (newTime <= 0) {
         setCountDownClass("");
+
         console.log("timer", leaderboardClass);
+
         if (leaderboardOpen.current) {
           clearInterval(interval);
         } else if (!leaderboardOpen.current) {
           gameStart.current = true;
         }
+
         clearInterval(interval);
       }
 
@@ -116,7 +119,6 @@ export default function SnakeGame(scores) {
       setEndScreen("showEnd");
     }
 
-    // (basically a return)
     gameStart.current = false;
   }
 
@@ -481,6 +483,12 @@ export default function SnakeGame(scores) {
                   name="score"
                   id="score"
                   value={snake.length - 2}
+                />
+
+                <input
+                  type="hidden"
+                  name="authenticity_token"
+                  value={form_authenticity_token}
                 />
 
                 <input
