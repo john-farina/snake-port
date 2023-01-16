@@ -3,11 +3,13 @@ class SnakeController < ApplicationController
     @highscores =  PlayerScore.all.order( 'score DESC' )
   end
 
-  def create 
+  def create
     @player_score = PlayerScore.new(params.permit(:name, :score))
-    
-    if @player_score.save 
-      puts "nice"
+
+    if @player_score.save
+      puts "Saved User Score"
+    else
+      puts "Error Saving User Score"
     end
   end
 end

@@ -23,28 +23,31 @@
       </ul>
     </li>
     <li>
-      <a href="#getting-started">React</a>
+      <a href="#react">React</a>
       <ul>
-        <li><a href="#prerequisites">State</a></li>
-        <li><a href="#installation">Game Logic</a></li>
+        <li><a href="#state">State</a></li>
+        <li><a href="#game-logic">Game Logic</a></li>
         <ul>
-            <li><a href="#prerequisites">Drawing Grid</a></li>
-            <li><a href="#installation">Drawing Snake in Grid</a></li>
-            <li><a href="#installation">Moving Snake in Grid</a></li>
-            <li><a href="#installation">Snake Collision</a></li>
-            <li><a href="#installation">Random Food Spawn</a></li>
+            <li><a href="#drawing-grid">Drawing Grid</a></li>
+            <li><a href="#drawing--moving-snake-in-grid">Drawing & Moving Snake in Grid</a></li>
+            <li><a href="#snake-collision">Snake Collision</a></li>
+            <li><a href="#random-food-spawn">Random Food Spawn</a></li>
       </ul>
       </ul>
     </li>
-    <li><a href="#usage">Design</a></li>
+    <li><a href="#rails">Rails</a></li>
     <ul>
-        <li><a href="#prerequisites">Top of Body</a></li>
-        <li><a href="#installation">Game Screen</a></li>
-        <li><a href="#installation">Buttons</a></li>
+        <li><a href="#model">Model</a></li>
+        <li><a href="#controller">Controller</a></li>
+    </ul>
+    <li><a href="#design">Design</a></li>
+    <ul>
+        <li><a href="#top-of-body">Top of Body</a></li>
+        <li><a href="#game-screen">Game Screen</a></li>
+        <li><a href="#buttons">Buttons</a></li>
     </ul>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -59,14 +62,58 @@ This is a web recreation of the classic snake game, but when you get a highscore
  - React
  - SCSS
 
+## React
+
+### State
+
+#### **Snake**
+the whole state of the project is revolving around the coordinates of snake, which are default 2 arrays inside of an array. I sparingly use States in the project only using it for what is needed to update every frame or so. <br/>
+I am also saving a string with useRef that is saying what direction the snake is facing which helps with moving it around.
+
+#### **Food Coordinates**
+The food cordinates are saved in a useRef so i dont loose the value of it with all of the other react data. getting the value using .current
+
+#### **Grid**
+For saving and updating the grid im using a useMemo because i want the grid to update everytime the Snake updates OR when food cordinates update. so i can propelry update the array that coordinates with the graph, inside the use memo i am drawing the grid everytime snake or food is updated.
+
+### Game Logic
+
+#### **Drawing Grid**
+Everytime snake updates the drawGrid function is getting called, which takes in snake coordinates, and food coordinates. It loops through the set Grid array and puts each one correspondingly. The first set in the snake array is drawn as the snake head, and the last is the tail. the rest of the array is placed as a snake body. and the food coordinates get placed as food.
+
+#### **Moving & Growing Snake in Grid**
+For moving the snake in the grid i remove the last value in the Snake Array and add another value to the first value. Determining which direction the snake is going the first or second spot in the new coordinates will be adjusted accordingly. <br/>
+For Growing the snake when a player eats food, i add a value behind the last one, growing the tail out by one. I did it from the back so it doesnt mess with the players movements.
+
+#### **Snake Collision**
+For Snake collisions im using functions inside of a useMemo, for snake to wall collision i am seeing if the head position in Snake Array ever is equal to 0 or 1, etc. depending on which wall. and if the direction is the one which it would run into it.
+This is in a useMemo because i want to run checks everytime the snake moves if it ran into something.
+The Snake to food collision is practically the same as the rest but only seeing if the Snake Head value is equal to the food Coordinates, and if it is then it grows the snake by one
+
+#### **Random Food Spawn**
+Food is spawned randomly on the grid and will keep trying to spawn if it failed because snake was in that position. Food cannot be spawned on the snake.
+
+## Rails
+
+### Model
+i wanted to save the highscores in a classic arcade way. (3 letter save no login) so all im saving in rails is a PlayerScore model which saves the 3 letter string. and the players score which is saved inside a hidden value in forms so the user cant manipulate it on screen.
+When submit i save a fake value over React that shows ur score right away without a refresh. When user refreshes/reloads the real score replaces the fake score that was just saved.
+
+### Controller
+In the controller i am taking all saved highscores and ordering them by value, and sending that back to react so i can then show the user. a ranked highscore. with the first 3 being different colors then the rest.
+
+i also creating new highscores over params, and saving them when the user submits the form.
+
+### Gems
+The most important gem im using in this project is <br/>
+`gem react-rails` <br/>
+This is one out of two React gems but i find this one works better and adds less of a hassle to set it up.
+
 <!-- USAGE EXAMPLES -->
 ## Usage
 
 To play snake click anywhere on the screen to start, or any button. When started you can use the on screen buttons to move around or the arrow keys on your keyboard. <br/>
 Eat the squares to grow and try not to run into yourself or any walls.
-
-_For more examples, please refer to the [Documentation](https://example.com)
-
 
 <!-- CONTACT -->
 ## Contact
