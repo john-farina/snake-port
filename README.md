@@ -42,7 +42,7 @@
     </ul>
     <li><a href="#design">Design</a></li>
     <ul>
-        <li><a href="#top-of-body">Top of Body</a></li>
+        <li><a href="#top-of-body">Header</a></li>
         <li><a href="#game-screen">Game Screen</a></li>
         <li><a href="#buttons">Buttons</a></li>
     </ul>
@@ -100,14 +100,32 @@ i wanted to save the highscores in a classic arcade way. (3 letter save no login
 When submit i save a fake value over React that shows ur score right away without a refresh. When user refreshes/reloads the real score replaces the fake score that was just saved.
 
 ### Controller
-In the controller i am taking all saved highscores and ordering them by value, and sending that back to react so i can then show the user. a ranked highscore. with the first 3 being different colors then the rest.
+In the controller i am taking all saved highscores and ordering them by value, and sending that back to react so i can then show the user a ranked highscore in order.
 
-i also creating new highscores over params, and saving them when the user submits the form.
+i also am creating new PlayerScores over params, and saving when the user submits the form.
 
 ### Gems
 The most important gem im using in this project is <br/>
 `gem react-rails` <br/>
 This is one out of two React gems but i find this one works better and adds less of a hassle to set it up.
+
+## Design
+
+### Header
+for the Title header i wanted to go for a engraved Gameboy type of title so i added a shadow inside of the text making it look more indented with a blinking red light to the right of it <br/>
+<!-- image -->
+I also added a point cointer in the top right to fill up space and it updates when a User gets more points
+<!-- image -->
+
+### Screen
+For the screen i added a screen texture over the square div. This works out really well to emulate a older screen texture. and i made the background a shade of green that is also the color of old gameboy screens and basing the rest of the colors around a darker green scale. <br/>
+the Food is bright white and glows trying to make it more obvious that its what the goal of the game is
+
+#### **Animations**
+Most animations are being run on steps to make it not smooth on purpose with the whole emulation feel i was going for. Text animation growing and shrinking, or colors going back and forth
+
+### Buttons
+For the buttons i made them bigger so its easier to click if user isnt using the arrow keys. The colors are based off of how older generation game controllers had this color scheme of buttons, For the clicks i remove the background shadow and scale it down slightly to create the illusion of a actual button going down.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
