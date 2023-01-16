@@ -42,7 +42,7 @@
     </ul>
     <li><a href="#design">Design</a></li>
     <ul>
-        <li><a href="#top-of-body">Header</a></li>
+        <li><a href="#header">Header</a></li>
         <li><a href="#game-screen">Game Screen</a></li>
         <li><a href="#buttons">Buttons</a></li>
     </ul>
