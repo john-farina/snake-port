@@ -1,5 +1,11 @@
 import React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import ArrowSvg from "./images/arrowsvg.svg";
+import ScreenTexture from "./images/screentext.png";
+import SmallScreenTexture from "./images/smallScreentext.png";
+import PlasticTexture from "./images/plasticText.jpg";
+import SaveIcon from "./images/save.svg";
+import TrophyIcon from "./images/trophy.svg";
 import drawGrid from "../functions/drawGrid";
 import moveSnakeCoords from "../functions/moveSnakeCoords";
 import randomFoodCoords from "../functions/randomFoodCoords";
@@ -7,19 +13,11 @@ import growSnakeByOne from "../functions/growSnakeByOne";
 import snakeToSnakeCollision from "../functions/snakeToSnakeCollision";
 import getStyledNum from "../functions/getStyledNum";
 import scoreBasedQuotes from "../functions/scoreBasedQuotes";
-import ArrowSvg from "./images/arrowsvg.svg";
-import ScreenTexture from "./images/screentext.png";
-import SmallScreenTexture from "./images/smallScreentext.png";
-import PlasticTexture from "./images/plasticText.jpg";
-import SaveIcon from "./images/save.svg";
-import TrophyIcon from "./images/trophy.svg";
 
 // HEAD === Snake Head
 // BODY === Snake Body
 // TAIL === Snake Tail
 // 15x15 grid always (idk why but thats what i chose)
-
-//when game ends show screen if they want to save score
 
 export default function SnakeGame(scores, form_authenticity_token) {
   let [highscores, setHighscores] = useState(scores);
@@ -287,23 +285,6 @@ export default function SnakeGame(scores, form_authenticity_token) {
     if (event.key === "ArrowRight" || event === "MoveRight") {
       allClicks("right");
     }
-
-    /////////////////// DEV TOOLS
-    // if (event.key === "f") {
-    //   eatCube();
-    // }
-    // if (event.key === "p") {
-    //   restartGameAfterEnd();
-    // }
-    // if (event.key === "Enter") {
-    //   if (!gameStart.current) {
-    //     startGame();
-    //   } else {
-    //     gameStart.current = false;
-    //     setFirstStart(true);
-    //     setEndScreen("");
-    //   }
-    // }
   };
 
   const endStartEvent = useMemo(() => {
@@ -636,6 +617,7 @@ export default function SnakeGame(scores, form_authenticity_token) {
             >
               <img src={TrophyIcon} className="trophyIcon" alt="" />
             </button>
+
             <p>HIGHSCORES</p>
           </div>
         </div>
@@ -683,3 +665,20 @@ export default function SnakeGame(scores, form_authenticity_token) {
     </div>
   );
 }
+
+/////////////////// DEV TOOLS
+// if (event.key === "f") {
+//   eatCube();
+// }
+// if (event.key === "p") {
+//   restartGameAfterEnd();
+// }
+// if (event.key === "Enter") {
+//   if (!gameStart.current) {
+//     startGame();
+//   } else {
+//     gameStart.current = false;
+//     setFirstStart(true);
+//     setEndScreen("");
+//   }
+// }

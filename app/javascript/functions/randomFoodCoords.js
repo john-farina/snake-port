@@ -1,13 +1,12 @@
 export default function randomFoodCoords(snakeCoords) {
   let foodCoord;
   let num = 0;
+  let ran1 = Math.floor(Math.random() * 14);
+  let ran2 = Math.floor(Math.random() * 14);
 
   if (snakeCoords) {
     num = snakeCoords.length;
   }
-
-  let ran1 = Math.floor(Math.random() * 14);
-  let ran2 = Math.floor(Math.random() * 14);
 
   if (ran1 !== 0) {
     ran1 += 1;
