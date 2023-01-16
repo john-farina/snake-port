@@ -78,6 +78,8 @@ The food cordinates are saved in a useRef so i dont loose the value of it with a
 #### **Grid**
 For saving and updating the grid im using a useMemo because i want the grid to update everytime the Snake updates OR when food cordinates update. so i can propelry update the array that coordinates with the graph, inside the use memo i am drawing the grid everytime snake or food is updated.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Game Logic
 
 #### **Drawing Grid**
@@ -95,6 +97,8 @@ The Snake to food collision is practically the same as the rest but only seeing 
 #### **Random Food Spawn**
 Food is spawned randomly on the grid and will keep trying to spawn if it failed because snake was in that position. Food cannot be spawned on the snake.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Rails
 
 ### Model
@@ -110,6 +114,8 @@ i also am creating new PlayerScores over params, and saving when the user submit
 The most important gem im using in this project is <br/>
 `gem react-rails` <br/>
 This is one out of two React gems but i find this one works better and adds less of a hassle to set it up.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Design
 
@@ -133,6 +139,8 @@ Most animations are being run on steps to make it not smooth on purpose with the
 For the buttons i made them bigger so its easier to click if user isnt using the arrow keys. The colors are based off of how older generation game controllers had this color scheme of buttons, For the clicks i remove the background shadow and scale it down slightly to create the illusion of a actual button going down.
 
 <img src="./app/assets/images/readme/buttons.gif" width="350" />
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
 ## Usage
