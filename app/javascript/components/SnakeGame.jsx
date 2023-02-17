@@ -321,9 +321,7 @@ export default function SnakeGame(scores, form_authenticity_token) {
     let arr = highscores.highscores;
     let reactArray = [];
 
-    arr.sort((x, y) => {
-      return y.score - x.score;
-    });
+    arr.sort((x, y) =>  y.score - x.score);
 
     if (arr.length >= 11) {
       for (let i = arr.length - 1; i >= 10; i--) {
@@ -406,7 +404,7 @@ export default function SnakeGame(scores, form_authenticity_token) {
           <div className={`popUpScreen highScores ${leaderboardClass}`}>
             <h1 className="boardTitle">HIGHSCORES</h1>
 
-            <div className="scoresContainer">{scoreLoop(highscores)}</div>
+       {/* <div className="scoresContainer">{scoreLoop(highscores)}</div> */}
 
             <p
               onClick={() => {

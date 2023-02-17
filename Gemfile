@@ -77,3 +77,5 @@ group :production do
 gem "pg"
 end
 
+
+gem "jsbundling-rails", "~> 1.1"
