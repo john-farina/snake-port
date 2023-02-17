@@ -15,7 +15,6 @@ Rails.application.configure do
   config.consider_all_requests_local = true
 
   config.hosts << "snake-port-production.up.railway.app"
-
   # Enable server timing
   config.server_timing = true
 
