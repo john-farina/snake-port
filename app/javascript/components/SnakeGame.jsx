@@ -56,6 +56,31 @@ export default function SnakeGame({ scores, form_authenticity_token }) {
     setSaveScoreClass("");
   }
 
+  function endGame() {
+    let scoreIsHigher = false;
+    let leaderboard = highscores;
+
+    if (gameStart.current = false) {
+      return
+    }
+
+    for (let i = 0; i < leaderboard.length; i++) {
+      if (snake.length - 2 >= leaderboard[i].score) {
+        scoreIsHigher = true;
+      }
+    }
+
+    if (scoreIsHigher || (leaderboard.length === 0 && snake.length - 2 != 0)) {
+      setEndScreen("");
+
+      setSaveScoreClass("showSave");
+    } else {
+      setEndScreen("showEnd");
+    }
+
+    gameStart.current = false;
+  }
+
   function resetGame() {
     setSnake([
       [12, 12],
@@ -99,27 +124,6 @@ export default function SnakeGame({ scores, form_authenticity_token }) {
 
       setTimer(newTime);
     }, 1000);
-  }
-
-  function endGame() {
-    let scoreIsHigher = false;
-    let leaderboard = highscores.highscores;
-
-    for (let i = 0; i < leaderboard.length; i++) {
-      if (snake.length - 2 >= leaderboard[i].score) {
-        scoreIsHigher = true;
-      }
-    }
-
-    if (scoreIsHigher || (leaderboard.length === 0 && snake.length - 2 != 0)) {
-      setEndScreen("");
-
-      setSaveScoreClass("showSave");
-    } else {
-      setEndScreen("showEnd");
-    }
-
-    gameStart.current = false;
   }
 
   function restartGameAfterEnd() {
@@ -448,7 +452,7 @@ export default function SnakeGame({ scores, form_authenticity_token }) {
                   updated_at: undefined,
                 });
 
-                setHighscores({ highscores: tempScores });
+                setHighscores(tempScores);
                 setSaveScoreClass("");
                 setLeaderboardClass("showLeaderboard");
 
