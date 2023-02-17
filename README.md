@@ -14,7 +14,7 @@
   <p align="center">
     A web recreation of the classic game Snake
     <br />
-    <a href="https://linktowebsite.com">View Live Demo</a>
+    <a href="https://snake.johnfarina.co">View Live Demo</a>
 </div>
 
 <!-- TABLE OF CONTENTS -->
