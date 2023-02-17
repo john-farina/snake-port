@@ -19,7 +19,7 @@ import scoreBasedQuotes from "../functions/scoreBasedQuotes";
 // TAIL === Snake Tail
 // 15x15 grid always (idk why but thats what i chose)
 
-export default function SnakeGame(scores, form_authenticity_token) {
+export default function SnakeGame({ scores, form_authenticity_token }) {
   let [highscores, setHighscores] = useState(scores);
   let [snake, setSnake] = useState([
     [12, 12],
@@ -41,6 +41,8 @@ export default function SnakeGame(scores, form_authenticity_token) {
   const [leaderboardClass, setLeaderboardClass] = useState("");
   const [saveScoreClass, setSaveScoreClass] = useState("");
   const leaderboardOpen = useRef(false);
+
+  console.log(scores)
 
   function clearAllScreens() {
     setEndScreen("");
@@ -318,7 +320,7 @@ export default function SnakeGame(scores, form_authenticity_token) {
   }
 
   function scoreLoop(highscores) {
-    let arr = highscores.highscores;
+    let arr = highscores;
     let reactArray = [];
 
     arr.sort((x, y) =>  y.score - x.score);
@@ -386,6 +388,7 @@ export default function SnakeGame(scores, form_authenticity_token) {
     return reactArray;
   }
 
+
   return (
     <div
       className="pageContainer"
@@ -404,7 +407,7 @@ export default function SnakeGame(scores, form_authenticity_token) {
           <div className={`popUpScreen highScores ${leaderboardClass}`}>
             <h1 className="boardTitle">HIGHSCORES</h1>
 
-       {/* <div className="scoresContainer">{scoreLoop(highscores)}</div> */}
+       <div className="scoresContainer">{scoreLoop(highscores)}</div>
 
             <p
               onClick={() => {
@@ -435,7 +438,7 @@ export default function SnakeGame(scores, form_authenticity_token) {
 
             <form
               onSubmit={(event) => {
-                let tempScores = highscores.highscores;
+                let tempScores = highscores;
 
                 tempScores.push({
                   id: undefined,

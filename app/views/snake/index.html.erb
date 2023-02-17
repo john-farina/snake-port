@@ -1,7 +1,5 @@
 <script>
-window.DATA_FROM_SERVER = {
-    form_authenticity_token: "<%= form_authenticity_token %>"
-}
+    window.DATA_FROM_SERVER = <%= raw(@props.to_json) %>
 </script>
 
 <div id="app">

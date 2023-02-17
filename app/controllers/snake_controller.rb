@@ -1,6 +1,10 @@
 class SnakeController < ApplicationController
   def index
     @highscores =  PlayerScore.all.order( 'score DESC' )
+    @props = {
+      form_authenticity_token:  form_authenticity_token,
+      highscores: ActiveModel::SerializableResource.new(PlayerScore.all).as_json
+    }
   end
 
   def create

@@ -7,6 +7,7 @@ ruby "3.1.2"
 gem "rails", "~> 7.0.4"
 
 gem 'bootstrap-sass'
+gem 'active_model_serializers', '~> 0.10.0'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
